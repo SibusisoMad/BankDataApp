@@ -1,0 +1,32 @@
+﻿
+<h1>Upload</h1>
+
+<p>
+    Upload a csv with columns in this order Payment ID,Account Holder,Branch Code,Account Number,Account Type,Transaction Date,Amount,Status,Effective Status Date
+</p>
+
+@using (Html.BeginForm("_UploadCSV", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="input-group">
+            <input type="file" class="form-control" name="postedFile" />
+            <div class="input-group-append">
+                <input type="submit" class="btn btn-primary" value="Import" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button type="button" onclick="cancelUpload()">Cancel</button>
+    </div>
+
+
+    @section Scripts {
+    <script>
+        function cancelUpload() {
+            if (xhr) {
+                xhr.abort();
+            }
+        }
+    </script>
+}
+}

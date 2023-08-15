@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<table class="table" style="border: 1px solid black;">
+    <tr>
+        <td style="width:13%;border-right: 1px solid black;">
+            <a href="#" id="link1" class="nav-link">Import File</a>
+            <a href="#" id="link2" class="nav-link">View Imports</a>
+            <a href="#" id="link3" class="nav-link">Report</a>
+        </td>
+        <td border="1">
+            <div id="partialViewContainer"></div>
+        </td>
+    </tr>
+</table>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/jscript">
+        $(document).ready(function (e) {
+            $("#link1").click(function (e) {
+                e.preventDefault();
+                //var id = ""; // the id parameter to pass to the partial view
+                //var url = '@Url.Action("_UploadCSV", "Home")?id=' + id;
+                //$('#partial-container').load(url);
+                $("#partialViewContainer").load('@Url.Action("_UploadCSV")');
+            });
+            $("#link2").click(function (e) {
+                e.preventDefault();
+                $("#partialViewContainer").load('@Url.Action("_ViewImports")');
+            });
+             $("#link3").click(function (e) {
+                e.preventDefault();
+                $("#partialViewContainer").load('@Url.Action("_ViewReport")');
+            });
+        });
+    </script> 
+
+    <script>
+        function displayAlert(){
+            Swal.fire("Working");
+        }
+        function displayAlertSuccess(){
+           
+            Swal.fire("Working","Good",'success');
+        }
+        function displayAlertError(){
+            var message = '@ViewBag.Message';
+            Swal.fire("Working", message  ,'error');
+        }
+
+        function displayConfirm() {
+            Swal.fire({
+                title:"do you want",
+                icon:'question',
+                showCancelButton: true
+            })
+        };
+        var strValue = "@((string)ViewBag.mssg)";
+        if(strValue !== null && strValue !== ""){
+            Swal.fire(strValue);
+        }
+    </script>
+
+}
+
+

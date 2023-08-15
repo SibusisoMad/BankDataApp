@@ -1,0 +1,93 @@
+﻿@model MasterDetail
+
+<h1>Master Grid</h1>
+<div class="row">
+    <table  id="masterGrid" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Account Holder</th>
+                <th>Branch Code</th>
+                <th>Account Number</th>
+                <th>Account Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Masters)
+            {
+                <tr data-id="@item.AccountHolder">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountHolder)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BranchCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountType)
+                    </td>
+                    <td>
+                        <button id="selbtn" class="select-btn" data-id="@item.AccountNumber">Edit</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <h1>Detail Grid</h1>
+    <div class="row">
+        <table id="detailGrid" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Transaction Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Effective Status Date</th>
+                    <th>Time Breached</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Details)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TransactionDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EffectiveStatusDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeBreached)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.select-btn').on('click', function () {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: '/Home/_ViewImports',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        //$("#detailGrid").html(result);
+                    },
+                    error: function () {
+                        alert('Error occurred while sending the request.');
+                    }
+                });
+            });
+        });
+    </script>
+
+</div>
